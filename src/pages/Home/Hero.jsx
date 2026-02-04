@@ -1,6 +1,7 @@
 import styles from "../../style/Hero.module.css";
 import HeroText from "../../components/HeroText";
 import { motion } from "framer-motion";
+import ParticleBackground from "../../components/ParticleBackground";
 
 
 
@@ -10,7 +11,8 @@ const Hero = () => {
     return (
         <>
             <section className={styles.hero}>
-                <div className={styles.overlay}></div>
+                <ParticleBackground />
+                {/* <div className={styles.overlay}></div> */}
 
                 <div className={styles.content}>
                     {/* Text */}

@@ -1,82 +1,144 @@
-import { motion } from "framer-motion";
-import styles from "../../style/ServicesSection.module.css";
+import React, { useState, useEffect } from 'react';
+import './ServicesSection.css';
 
-const services = [
+const servicesData = [
     {
-        title: "Online Reputation Management",
-        icon: "/assets/service-icon2.png",
+        id: 1,
+        title: "Design",
+        image: "https://dev254.kodesolution.com/edigitaal/wp-content/uploads/2025/10/service-1.png",
+        description: "Creative Design and Development"
     },
     {
-        title: "Business Growth Strategy",
-        icon: "/assets/service-icon2.png",
+        id: 2,
+        title: "Development",
+        image: "https://dev254.kodesolution.com/edigitaal/wp-content/uploads/2025/10/service-2.png",
+        description: "Innovative Tech Solutions"
     },
     {
-        title: "Search Engine Optimization",
-        icon: "/assets/service-icon2.png",
+        id: 3,
+        title: "Marketing",
+        image: "https://dev254.kodesolution.com/edigitaal/wp-content/uploads/2025/10/service-1.png",
+        description: "Strategic Digital Growth"
+    },
+    {
+        id: 4,
+        title: "SEO",
+        image: "https://dev254.kodesolution.com/edigitaal/wp-content/uploads/2025/10/service-2.png",
+        description: "Search Engine Optimization"
     }
 ];
 
+// Massive Buffer Strategy: 6 copies (Preserved from previous step)
+const extendedServices = [
+    ...servicesData, ...servicesData, ...servicesData,
+    ...servicesData, ...servicesData, ...servicesData
+];
+
 const ServicesSection = () => {
+    const originalLength = servicesData.length;
+    // Start at Set 4 (Index 12)
+    const [activeIndex, setActiveIndex] = useState(originalLength * 3);
+    const [isHovered, setIsHovered] = useState(false);
+    const [isResetting, setIsResetting] = useState(false);
+
+    useEffect(() => {
+        if (isHovered) return;
+        const interval = setInterval(() => {
+            setActiveIndex((prev) => prev + 1);
+        }, 3000);
+        return () => clearInterval(interval);
+    }, [isHovered]);
+
+    // Loop Reset Logic (Preserved)
+    useEffect(() => {
+        if (activeIndex === originalLength * 4) {
+            const timeout = setTimeout(() => {
+                setIsResetting(true);
+                setActiveIndex(originalLength * 3);
+                setTimeout(() => setIsResetting(false), 50);
+            }, 1200);
+            return () => clearTimeout(timeout);
+        }
+        if (activeIndex < originalLength) {
+            setActiveIndex(originalLength * 3);
+        }
+    }, [activeIndex, originalLength]);
+
+    const handleDotClick = (index) => {
+        setIsResetting(false);
+        setActiveIndex((originalLength * 3) + index);
+    };
+
     return (
-        <section className={styles.servicesSection}>
-            <div className={styles.topGrid}>
-                <motion.div
-                    className={styles.imageBox}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8 }}
+        <div className="services-section">
+            <h2 className="services-title">What We are Offering to <br /><span>Our Potential Client</span></h2>
+
+            <div
+                className="carousel-viewport"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+            >
+                <div
+                    className="carousel-track"
+                    style={{
+                        '--active-index': activeIndex,
+                        '--count': extendedServices.length,
+                        '--transition-duration': isResetting ? '0s' : '1.2s'
+                    }}
                 >
-                    <img src="/assets/service-img.png" alt="Creative team" />
-                </motion.div>
+                    {extendedServices.map((service, index) => (
+                        <div
+                            key={`${service.id}-${index}`}
+                            className={`service-card ${index === activeIndex ? 'active' : ''}`}
+                            onClick={() => setActiveIndex(index)}
+                        >
+                            <div className="snake-line">
+                                <span></span><span></span><span></span><span></span>
+                            </div>
 
-                <div className={styles.headerContent}>
-                    <span className={styles.subTitle}>✱ Creative Services</span>
-                    <h2 className={styles.mainTitle}>
-                        We deliver versatile end to <br /> end digital services
-                    </h2>
-                </div>
+                            <div className="service-block-style1 spin-border-animation">
+                                <div className="inner-column">
+                                    <div className="image-box">
+                                        <img src={service.image} alt={service.title} loading="lazy" />
+                                    </div>
+                                    <div className="content-box">
+                                        <h5 className="service-subtitle">{service.title}</h5>
+                                        <h4 className="service-title">
+                                            <a href="#">{service.description}</a>
+                                        </h4>
+                                        <div className="service-details">
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.
+                                        </div>
 
-                <div className={styles.arrows}>
-                    <button className={styles.arrowBtn}>←</button>
-                    <button className={styles.arrowBtn}>→</button>
+                                        {/* NEW: Independent Button + Icon Structure */}
+                                        <div className="btn-box">
+                                            <a href="#" className="read-more-text">Read More</a>
+                                            <a href="#" className="read-more-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                                                    <polyline points="7 7 17 7 17 17"></polyline>
+                                                </svg>
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
 
-            <div className={styles.cardsGrid}>
-                {/* Special Intro Card */}
-                <motion.div className={styles.introCard}>
-                    <img src="/assets/iconss.png" alt="star" className={styles.introIcon} />
-                    <p>
-                        Nexella is a dynamic best digital marketing agency
-                        dedicated to empowering businesses through innovative online.
-                    </p>
-                    <div className={styles.btnWrapper}>
-                        <button className={styles.exploreAll}>Explore All Services</button>
-                        <div className={styles.smallArrow}>↗</div>
-                    </div>
-                </motion.div>
-
-                {/* Service Cards */}
-                {services.map((item, index) => (
-                    <motion.div
+            <div className="dots-container">
+                {servicesData.map((_, index) => (
+                    <div
                         key={index}
-                        className={styles.serviceCard}
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.2 }}
-                    >
-                        <div className={styles.serviceIcon}>
-                            <img src={item.icon} alt="icon" />
-                        </div>
-                        <h3>{item.title}</h3>
-                        <div className={styles.cardFooter}>
-                            <span>Explore More</span>
-                            <div className={styles.footerArrow}>↗</div>
-                        </div>
-                    </motion.div>
+                        className={`dot ${index === (activeIndex % originalLength) ? 'active' : ''}`}
+                        onClick={() => handleDotClick(index)}
+                    />
                 ))}
             </div>
-        </section>
+        </div>
     );
 };
 

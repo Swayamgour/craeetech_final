@@ -4,6 +4,8 @@ import Hero from './Hero'
 import AboutSection from './AboutSection'
 import MissionSection from './MissionSection'
 import ServicesSection from './ServicesSection'
+import SkillSection from './SkillSection'
+import TeamSection from './TeamSection'
 // import HeroText from './HeroText'
 
 function Home() {
@@ -14,6 +16,8 @@ function Home() {
             <AboutSection />
             <MissionSection />
             <ServicesSection />
+            <SkillSection />
+            <TeamSection/>
         </>
     )
 }

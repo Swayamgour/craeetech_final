@@ -1,0 +1,364 @@
+.services-section {
+    background-color: #000;
+    padding: 5rem 0;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.services-title {
+    color: #fff;
+    font-size: 2.8rem;
+    margin-bottom: 3.5rem;
+    text-align: center;
+    z-index: 10;
+    line-height: 1.2;
+}
+
+.services-title span {
+    color: #4ade80;
+    font-style: italic;
+}
+
+/* Carousel Layout */
+.carousel-viewport {
+    width: 100%;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.carousel-track {
+    display: flex;
+    gap: 30px;
+    transition: transform var(--transition-duration, 1.2s) cubic-bezier(0.25, 1, 0.5, 1);
+    transform: translateX(calc(50% - 350px - (var(--active-index) * (700px + 30px))));
+    width: max-content;
+    padding-left: 0;
+}
+
+/* Service Card Container */
+.service-card {
+    position: relative;
+    width: 700px;
+    height: 420px;
+    background: #050505;
+    border-radius: 50px;
+    /* Increased radius */
+    overflow: hidden;
+    box-sizing: border-box;
+    border: 1px solid #333;
+    /* More visible default border */
+    transition: all 0.5s ease;
+    flex-shrink: 0;
+    opacity: 1;
+}
+
+.service-card.active {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    border-color: #4ade80;
+    background: #000;
+    z-index: 10;
+}
+
+/* NEW STRUCTURE STYLING */
+.service-block-style1 {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 2;
+}
+
+.inner-column {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/* Image Box */
+.image-box {
+    width: 45%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 20px;
+}
+
+.image-box img {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    animation: spin 15s linear infinite;
+    animation-play-state: paused;
+}
+
+.service-card:hover .image-box img {
+    animation-play-state: running;
+}
+
+/* Content Box */
+.content-box {
+    width: 55%;
+    padding: 3rem 2rem 3rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+    z-index: 1;
+}
+
+.service-subtitle {
+    font-size: 1.25rem;
+    color: #4ade80;
+    /* Highlighted color */
+    margin: 0 0 10px;
+    font-weight: 600;
+}
+
+.service-title {
+    margin: 0 0 15px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.service-title a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.service-title a:hover {
+    color: #4ade80;
+}
+
+.service-details {
+    color: #888;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    max-width: 90%;
+}
+
+/* NEW BUTTON STYLE: Separate Text and Icon */
+.btn-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    /* Gap between button and icon */
+}
+
+/* 1. Green Text Button */
+.read-more-text {
+    background: #4ade80;
+    /* Lime Green */
+    color: #000;
+    padding: 12px 28px;
+    border-radius: 30px;
+    /* Pill shape */
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: transform 0.3s ease, background 0.3s ease;
+    display: inline-block;
+}
+
+.read-more-text:hover {
+    background: #fff;
+    transform: translateY(-2px);
+}
+
+/* 2. White Circle Icon */
+.read-more-icon {
+    width: 45px;
+    height: 45px;
+    background: #fff;
+    border-radius: 50%;
+    /* Perfect Circle */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    font-size: 1.1rem;
+    /* Adjust for SVG size */
+    transition: transform 0.3s ease, background 0.3s ease;
+    text-decoration: none;
+}
+
+.read-more-icon:hover {
+    background: #4ade80;
+    transform: rotate(45deg);
+    /* Subtle spin on hover */
+}
+
+/* Spin Animation */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Snake Border */
+.service-card .snake-line span {
+    position: absolute;
+    display: block;
+}
+
+.service-card .snake-line span:nth-child(1) {
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #4ade80);
+    animation: btn-anim1 2s linear infinite;
+}
+
+.service-card .snake-line span:nth-child(2) {
+    top: -100%;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, #4ade80);
+    animation: btn-anim2 2s linear infinite;
+    animation-delay: 0.5s;
+}
+
+.service-card .snake-line span:nth-child(3) {
+    bottom: 0;
+    right: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(270deg, transparent, #4ade80);
+    animation: btn-anim3 2s linear infinite;
+    animation-delay: 1s;
+}
+
+.service-card .snake-line span:nth-child(4) {
+    bottom: -100%;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(360deg, transparent, #4ade80);
+    animation: btn-anim4 2s linear infinite;
+    animation-delay: 1.5s;
+}
+
+@keyframes btn-anim1 {
+    0% {
+        left: -100%;
+    }
+
+    50%,
+    100% {
+        left: 100%;
+    }
+}
+
+@keyframes btn-anim2 {
+    0% {
+        top: -100%;
+    }
+
+    50%,
+    100% {
+        top: 100%;
+    }
+}
+
+@keyframes btn-anim3 {
+    0% {
+        right: -100%;
+    }
+
+    50%,
+    100% {
+        right: 100%;
+    }
+}
+
+@keyframes btn-anim4 {
+    0% {
+        bottom: -100%;
+    }
+
+    50%,
+    100% {
+        bottom: 100%;
+    }
+}
+
+/* Dots */
+.dots-container {
+    display: flex;
+    gap: 12px;
+    margin-top: 2.5rem;
+    z-index: 20;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    background-color: #4ade80;
+    transform: scale(1.4);
+    box-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .service-card {
+        width: 600px;
+        height: 380px;
+    }
+
+    .carousel-track {
+        transform: translateX(calc(50% - 300px - (var(--active-index) * (600px + 30px))));
+    }
+}
+
+@media (max-width: 768px) {
+    .service-card {
+        width: 90vw;
+        height: auto;
+    }
+
+    .carousel-track {
+        transform: translateX(calc(50% - 45vw - (var(--active-index) * (90vw + 20px))));
+        gap: 20px;
+    }
+
+    .inner-column {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .image-box {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .content-box {
+        width: 100%;
+        padding: 1rem;
+        align-items: center;
+    }
+}
