@@ -1,0 +1,91 @@
+.servicesPage {
+    background: #0b0b0b;
+    color: white;
+}
+
+/* HERO */
+.hero {
+    height: 50vh;
+    background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)),
+        url("../../public/assets/page-title-bg.png") center/cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    color: #f7c873;
+}
+
+.hero p {
+    margin-top: 10px;
+    color: #ccc;
+}
+
+/* GRID */
+.servicesSection {
+    padding: 80px 8%;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    background: #151515;
+    border-radius: 16px;
+    padding: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    color: #f7c873;
+}
+
+.icon {
+    font-size: 1.5rem;
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin: 10px 0;
+}
+
+.card h3 {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    color: white;
+}
+
+/* Hover glow */
+.card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #f7c87330, transparent);
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.card:hover::after {
+    opacity: 1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+}

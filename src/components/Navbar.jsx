@@ -2,11 +2,24 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import styles from "../style/Navbar.module.css";
 import { FaPhoneAlt, FaBars, FaTimes } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
-const menuItems = ["Home", "About", "Services", "Portfolio", "Career", "Contact"];
+// const menuItems = ["Home", "About", "Services", "Portfolio", "Career", "Contact"];
+
+const menuItems = [
+  { name: "Home", path: "/" },
+  { name: "About", path: "/about" },
+  { name: "Services", path: "/ServicesPage" },
+  { name: "Portfolio", path: "/PortfolioPage" },
+  { name: "Career", path: "/CareerPage" },
+  { name: "Contact", path: "/contact" },
+];
+
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+
+  const navigate = useNavigate()
 
   return (
     <motion.nav
@@ -27,8 +40,9 @@ const Navbar = () => {
             key={item}
             whileHover={{ scale: 1.1, color: "#00ff99" }}
             transition={{ type: "spring", stiffness: 300 }}
+            onClick={() => navigate(item?.path)}
           >
-            {item}
+            {item?.name}
           </motion.li>
         ))}
       </ul>
