@@ -12,7 +12,7 @@ const menuItems = [
   { name: "Services", path: "/ServicesPage" },
   { name: "Career", path: "/CareerPage" },
   { name: "Contact", path: "/contact" },
-  { name: "Portfolio", path: "/PortfolioPage" },
+  // { name: "Portfolio", path: "/PortfolioPage" },
 ];
 
 
