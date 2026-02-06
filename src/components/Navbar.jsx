@@ -10,9 +10,9 @@ const menuItems = [
   { name: "Home", path: "/" },
   { name: "About", path: "/about" },
   { name: "Services", path: "/ServicesPage" },
-  { name: "Portfolio", path: "/PortfolioPage" },
   { name: "Career", path: "/CareerPage" },
   { name: "Contact", path: "/contact" },
+  { name: "Portfolio", path: "/PortfolioPage" },
 ];
 
 
