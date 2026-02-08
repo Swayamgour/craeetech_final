@@ -7,6 +7,9 @@ import ServicesSection from './ServicesSection'
 import SkillSection from './SkillSection'
 import TeamSection from './TeamSection'
 import Footer from '../Footer'
+import HowItWorks from './HowItWorks'
+import Blog from '../Blog'
+import FAQ from '../FAQ'
 // import HeroText from './HeroText'
 
 function Home() {
@@ -18,7 +21,11 @@ function Home() {
             <MissionSection />
             <ServicesSection />
             <SkillSection />
-            <TeamSection/>
+            <TeamSection />
+            <HowItWorks />
+            <Blog />
+            <FAQ />
+
             {/* <Footer /> */}
         </>
     )

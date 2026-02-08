@@ -1,7 +1,7 @@
 .skill-section {
     background-color: #0b0b0b;
     color: white;
-    padding: 100px 0;
+    padding: 80px 0 100px;
     font-family: 'Inter', sans-serif;
     overflow: hidden;
 }
@@ -24,16 +24,17 @@
     position: relative;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .visual-grid {
     position: relative;
     width: 600px;
     height: 600px;
+    margin: 0 auto;
 }
 
 /* --- Hover Effects: Rotating Green Circle --- */
-/* Affects ALL items: Image, Icon, and Center wrappers */
 .grid-item .image-wrapper::before,
 .grid-item .icon-wrapper::before,
 .item-center .center-wrapper::before {
@@ -80,19 +81,25 @@
     z-index: 10;
 }
 
-/* --- Uniform Wrapper Sizing (135px) for "Proper Code" --- */
-
-/* 1. Image Wrappers (Team Photos) */
-.image-wrapper {
+/* --- Uniform Wrapper Sizing --- */
+.image-wrapper,
+.icon-wrapper,
+.center-wrapper {
     width: 135px;
     height: 135px;
     border-radius: 50%;
     overflow: hidden;
     position: relative;
     background-color: #000;
-    padding: 8px;
-    /* Inner spacing */
     border: 1px solid #222;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-wrapper {
+    padding: 8px;
 }
 
 .image-wrapper img {
@@ -102,47 +109,22 @@
     border-radius: 50%;
 }
 
-/* 2. Icon Wrappers (Figma, XD, Ps, Ai, In) */
-.icon-wrapper {
-    width: 135px;
-    height: 135px;
-    background-color: #000;
-    border-radius: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #222;
-    position: relative;
-}
-
-.icon-wrapper img {
+.icon-wrapper img,
+.center-wrapper img {
     width: 45px;
     height: auto;
     margin-bottom: 8px;
     object-fit: contain;
 }
 
-.icon-wrapper span {
+.icon-wrapper span,
+.highlight-label {
     font-size: 14px;
     color: #fff;
     font-weight: 500;
 }
 
-/* 3. Center Wrapper (Sketch) - Standardized Style */
 .center-wrapper {
-    width: 135px;
-    /* Matches others */
-    height: 135px;
-    background-color: #000;
-    border-radius: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #222;
-    /* Matches others */
-    position: relative;
     z-index: 5;
 }
 
@@ -151,36 +133,16 @@
     display: none;
 }
 
-.center-wrapper img {
-    width: 45px;
-    /* Matches others */
-    height: auto;
-    /* Fix for Aspect Ratio */
-    object-fit: contain;
-    /* Ensure it renders "sahi se" */
-    margin-bottom: 5px;
-}
-
-.highlight-label {
-    color: white;
-    font-size: 14px;
-    /* Matches others */
-    font-weight: 500;
-}
-
-
 /* --- Strict 3-Row Positioning Logic --- */
 
 /* ROW 1 (TOP) */
 .item-1 {
-    /* Team Photo */
     top: 0;
     left: 40px;
     z-index: 3;
 }
 
 .item-2 {
-    /* Figma */
     top: 0;
     left: 50%;
     transform: translateX(-50%);
@@ -191,15 +153,12 @@
 }
 
 .item-3 {
-    /* Adobe XD */
     top: 0;
     right: 40px;
 }
 
-
 /* ROW 2 (MIDDLE) */
 .item-4 {
-    /* Photoshop */
     top: 50%;
     left: 0;
     transform: translateY(-50%);
@@ -210,7 +169,6 @@
 }
 
 .item-5 {
-    /* Inner Team - Tucked */
     top: 50%;
     left: 140px;
     transform: translateY(-50%);
@@ -221,7 +179,7 @@
     transform: translateY(-50%) scale(1.1);
 }
 
-/* Center Sketch - Adjusted to 54% as requested */
+/* Center Sketch */
 .item-center {
     top: 50%;
     left: 54%;
@@ -233,17 +191,14 @@
     transform: translate(-50%, -50%) scale(1.1);
 }
 
-
 /* ROW 3 (BOTTOM) */
 .item-7 {
-    /* Team Photo */
     bottom: 0;
     left: 40px;
     z-index: 3;
 }
 
 .item-8 {
-    /* Invision */
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
@@ -254,11 +209,9 @@
 }
 
 .item-9 {
-    /* Illustrator */
     bottom: 0;
     right: 40px;
 }
-
 
 /* --- Right Side: Content --- */
 .skill-content {
@@ -291,19 +244,20 @@
 .skill-bars {
     display: flex;
     flex-direction: column;
+    gap: 20px;
 }
 
 .skill-card {
-    border-radius: 50px;
+    border-radius: 20px;
     padding: 18px 40px;
-    margin-bottom: -20px;
     position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-weight: 600;
-    transition: transform 0.3s;
+    transition: transform 0.3s ease;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    height: 70px;
 }
 
 .skill-card:hover {
@@ -335,13 +289,6 @@
     color: black;
     width: 70%;
     z-index: 4;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-}
-
-.skill-card {
-    border-radius: 20px;
-    height: 70px;
 }
 
 .card-2 {
@@ -354,70 +301,337 @@
 .card-3 {
     background-color: #222222;
     color: white;
-    width: 90%;
+    width: 85%;
     z-index: 2;
 }
 
 .card-4 {
     background-color: #000000;
     color: white;
-    width: 100%;
+    /* width: 100%; */
     z-index: 1;
     border: 1px solid #333;
 }
 
+/* ========== RESPONSIVE STYLES ========== */
 
-/* Responsive */
+/* Large Tablets */
 @media (max-width: 1200px) {
     .skill-container {
         flex-direction: column;
-        padding: 0 20px;
+        padding: 0 30px;
+        gap: 60px;
     }
 
     .skill-visuals {
         min-width: unset;
         width: 100%;
-        margin-bottom: 50px;
-        transform: scale(0.8);
+        margin-bottom: 0;
+    }
+
+    .visual-grid {
+        width: 500px;
+        height: 500px;
+    }
+
+    .image-wrapper,
+    .icon-wrapper,
+    .center-wrapper {
+        width: 115px;
+        height: 115px;
+    }
+
+    .icon-wrapper img,
+    .center-wrapper img {
+        width: 40px;
     }
 
     .skill-content {
         padding-left: 0;
+        min-width: unset;
         width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .skill-header h2 {
+        font-size: 48px;
+        margin-bottom: 40px;
     }
 }
 
-@media (max-width: 768px) {
+/* Tablets */
+@media (max-width: 992px) {
     .visual-grid {
+        width: 450px;
+        height: 450px;
+    }
+
+    .image-wrapper,
+    .icon-wrapper,
+    .center-wrapper {
+        width: 100px;
+        height: 100px;
+    }
+
+    .icon-wrapper img,
+    .center-wrapper img {
+        width: 35px;
+    }
+
+    .icon-wrapper span,
+    .highlight-label {
+        font-size: 12px;
+    }
+
+    .item-5 {
+        left: 120px;
+    }
+}
+
+/* Mobile Landscape / Small Tablets */
+@media (max-width: 768px) {
+    .skill-section {
+        padding: 60px 0;
+    }
+
+    .skill-container {
+        padding: 0 20px;
+        gap: 50px;
+    }
+
+    .visual-grid {
+        width: 400px;
+        height: 400px;
+    }
+
+    .image-wrapper,
+    .icon-wrapper,
+    .center-wrapper {
+        width: 90px;
+        height: 90px;
+    }
+
+    .icon-wrapper img,
+    .center-wrapper img {
+        width: 30px;
+        margin-bottom: 5px;
+    }
+
+    .icon-wrapper span,
+    .highlight-label {
+        font-size: 11px;
+    }
+
+    .item-1,
+    .item-3,
+    .item-7,
+    .item-9 {
+        left: 20px;
+        right: 20px;
+    }
+
+    .item-5 {
+        left: 100px;
+    }
+
+    .skill-header h2 {
+        font-size: 42px;
+        margin-bottom: 35px;
+    }
+
+    .skill-card {
+        padding: 15px 30px;
+        height: 65px;
+    }
+
+    .skill-info h3,
+    .skill-info .percentage {
+        font-size: 16px;
+    }
+}
+
+/* Mobile Portrait */
+@media (max-width: 576px) {
+    .skill-section {
+        padding: 50px 0;
+    }
+
+    .skill-container {
+        padding: 0 15px;
+        gap: 40px;
+    }
+
+    .skill-visuals {
         width: 100%;
-        height: auto;
-        min-height: 400px;
+        overflow: visible;
     }
 
-    .grid-item {
-        position: relative;
-        top: unset;
-        left: unset;
-        right: unset;
-        bottom: unset;
-        transform: none;
-        display: inline-block;
-        margin: 10px;
+    .visual-grid {
+        width: 320px;
+        height: 320px;
     }
 
-    .item-center {
-        display: block;
-        margin: 20px auto;
-        transform: none;
+    .image-wrapper,
+    .icon-wrapper,
+    .center-wrapper {
+        width: 75px;
+        height: 75px;
+    }
+
+    .icon-wrapper img,
+    .center-wrapper img {
+        width: 25px;
+        margin-bottom: 4px;
+    }
+
+    .icon-wrapper span,
+    .highlight-label {
+        font-size: 10px;
+    }
+
+    /* Adjust positions for smaller grid */
+    .item-1 {
+        top: 5px;
+        left: 10px;
+    }
+
+    .item-2 {
+        top: 5px;
+    }
+
+    .item-3 {
+        top: 5px;
+        right: 10px;
+    }
+
+    .item-4 {
+        left: 5px;
+    }
+
+    .item-5 {
+        left: 70px;
+    }
+
+    .item-7 {
+        bottom: 5px;
+        left: 10px;
+    }
+
+    .item-9 {
+        bottom: 5px;
+        right: 10px;
     }
 
     .skill-header h2 {
         font-size: 36px;
+        margin-bottom: 30px;
     }
 
-    .grid-item:hover,
-    .item-center:hover,
-    .item-2:hover {
-        transform: none;
+    .skill-header h2 br {
+        display: none;
+    }
+
+    .sub-title {
+        font-size: 12px;
+    }
+
+    .skill-card {
+        padding: 12px 25px;
+        height: 60px;
+        /* width: 100% ; */
+        margin: 0 !important;
+    }
+
+    .skill-info h3,
+    .skill-info .percentage {
+        font-size: 15px;
+    }
+
+    .skill-card:hover {
+        transform: translateX(10px);
+    }
+}
+
+/* Extra Small Mobile */
+@media (max-width: 400px) {
+    .visual-grid {
+        width: 280px;
+        height: 280px;
+    }
+
+    .image-wrapper,
+    .icon-wrapper,
+    .center-wrapper {
+        width: 65px;
+        height: 65px;
+    }
+
+    .icon-wrapper img,
+    .center-wrapper img {
+        width: 22px;
+    }
+
+    .item-5 {
+        left: 60px;
+    }
+
+    .skill-header h2 {
+        font-size: 32px;
+    }
+
+    .skill-card {
+        padding: 10px 20px;
+        height: 55px;
+    }
+
+    .skill-info h3,
+    .skill-info .percentage {
+        font-size: 14px;
+    }
+}
+
+/* Mobile Grid Layout (Stack items vertically) */
+@media (max-width: 320px) {
+    .visual-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        height: auto;
+        width: 100%;
+        gap: 15px;
+    }
+
+    .grid-item {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        transform: none !important;
+        margin: 0 5px;
+    }
+
+    .item-center {
+        order: -1;
+        margin-bottom: 20px;
+    }
+
+    .image-wrapper,
+    .icon-wrapper,
+    .center-wrapper {
+        width: 60px;
+        height: 60px;
+    }
+
+    .icon-wrapper img,
+    .center-wrapper img {
+        width: 20px;
+    }
+
+    .skill-header h2 {
+        font-size: 28px;
     }
 }

@@ -35,13 +35,13 @@
 }
 
 .textBox span {
-    color: #00ffcc;
+    color: #66ff33;
 }
 
 /* Button */
 .btn {
     margin-top: 30px;
-    background: linear-gradient(135deg, #00ffcc, #3399ff);
+    background: linear-gradient(135deg, #66ff33, #3399ff);
     border: none;
     padding: 14px 26px;
     border-radius: 50px;
@@ -101,9 +101,9 @@
 }
 
 .text {
-    fill: #00ffcc;
+    fill: #66ff33;
     font-size: 12px;
-    letter-spacing: 4px;
+    letter-spacing: 5.5px;
     font-weight: 600;
 }
 
@@ -116,7 +116,7 @@
     width: 55px;
     height: 55px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #3399ff, #00ffcc);
+    background: linear-gradient(135degh, #66ff33);
     color: white;
     display: flex;
     align-items: center;
@@ -168,6 +168,7 @@
     }
 
     .wrapper {
+        display: none;
         width: 120px;
         height: 120px;
         bottom: 20px;

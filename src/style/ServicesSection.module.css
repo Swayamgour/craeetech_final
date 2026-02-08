@@ -28,7 +28,7 @@
 }
 
 .subTitle {
-    color: #E1C05E;
+    color: #66ff33;
     letter-spacing: 1px;
     font-weight: 600;
 }
@@ -102,7 +102,7 @@
 /* Service Card Specifics */
 .serviceIcon img {
     width: 50px;
-    filter: drop-shadow(0 0 10px #E1C05E);
+    filter: drop-shadow(0 0 10px #66ff33);
 }
 
 .serviceCard h3 {

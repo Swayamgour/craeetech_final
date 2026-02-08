@@ -7,147 +7,242 @@ const ParticleBackground = () => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
         let animationFrameId;
-        let particlesArray;
+        let particlesArray = [];
 
-        // Set dimensions
-        const setDimensions = () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+        // Configuration
+        const config = {
+            particleCount: 120, // Adjust density
+            connectionDistance: 150,
+            mouseRadius: 150,
+            particleSize: 2,
+            baseSpeed: 0.5,
+            returnForce: 0.02, // Force to return to original position
+            mouseForce: 0.02 // Force to follow mouse
         };
-        setDimensions();
 
-        // Mouse position
         let mouse = {
             x: null,
             y: null,
-            radius: 170
+            active: false
+        };
+
+        const setDimensions = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         };
 
         const handleMouseMove = (event) => {
             mouse.x = event.x;
             mouse.y = event.y;
+            mouse.active = true;
+        };
+
+        const handleMouseOut = () => {
+            mouse.active = false;
         };
 
         window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mouseout', handleMouseOut);
+        window.addEventListener('resize', () => {
+            setDimensions();
+            init();
+        });
 
         class Particle {
-            constructor(x, y, directionX, directionY, size, color) {
-                this.x = x;
-                this.y = y;
-                this.directionX = directionX;
-                this.directionY = directionY;
-                this.size = size;
-                this.color = color;
+            constructor() {
+                this.init();
             }
 
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-                ctx.fillStyle = '#ffffff';
-                ctx.fill();
+            init() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * config.baseSpeed;
+                this.vy = (Math.random() - 0.5) * config.baseSpeed;
+                this.size = Math.random() * config.particleSize + 1;
+
+                // Store original position for return effect
+                this.originalX = this.x;
+                this.originalY = this.y;
+
+                // Store velocity before mouse interaction
+                this.originalVX = this.vx;
+                this.originalVY = this.vy;
             }
 
             update() {
-                if (this.x > canvas.width || this.x < 0) {
-                    this.directionX = -this.directionX;
-                }
-                if (this.y > canvas.height || this.y < 0) {
-                    this.directionY = -this.directionY;
-                }
+                // Calculate return force to original position
+                let returnForceX = (this.originalX - this.x) * config.returnForce;
+                let returnForceY = (this.originalY - this.y) * config.returnForce;
 
-                // Check collision detection - mouse position / particle position
-                let dx = mouse.x - this.x;
-                let dy = mouse.y - this.y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
+                // Apply return force
+                this.vx += returnForceX;
+                this.vy += returnForceY;
 
-                // Interaction: gently push away or attract? 
-                // "Cursor ke sath move ho raha hai" usually implies connection or magnetic effect.
-                // Standard "constellation" behavior:
-                if (distance < mouse.radius) {
-                    if (mouse.x < this.x && this.x < canvas.width - this.size * 10) {
-                        this.x += 3;
-                    }
-                    if (mouse.x > this.x && this.x > this.size * 10) {
-                        this.x -= 3;
-                    }
-                    if (mouse.y < this.y && this.y < canvas.height - this.size * 10) {
-                        this.y += 3;
-                    }
-                    if (mouse.y > this.y && this.y > this.size * 10) {
-                        this.y -= 3;
+                // Mouse Interaction
+                if (mouse.active && mouse.x !== null && mouse.y !== null) {
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < config.mouseRadius) {
+                        // Calculate force based on distance
+                        let forceFactor = (config.mouseRadius - distance) / config.mouseRadius;
+
+                        // Move towards mouse
+                        this.vx += dx * config.mouseForce * forceFactor;
+                        this.vy += dy * config.mouseForce * forceFactor;
                     }
                 }
 
-                this.x += this.directionX;
-                this.y += this.directionY;
-                this.draw();
+                // Apply velocity damping to prevent infinite acceleration
+                this.vx *= 0.98;
+                this.vy *= 0.98;
+
+                // Limit maximum speed
+                const maxSpeed = 2;
+                const currentSpeed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+                if (currentSpeed > maxSpeed) {
+                    this.vx = (this.vx / currentSpeed) * maxSpeed;
+                    this.vy = (this.vy / currentSpeed) * maxSpeed;
+                }
+
+                // Bounce off edges with some damping
+                const bounceDamping = 0.9;
+                if (this.x < 0 || this.x > canvas.width) {
+                    this.vx = -this.vx * bounceDamping;
+                    this.x = this.x < 0 ? 0 : canvas.width;
+                }
+                if (this.y < 0 || this.y > canvas.height) {
+                    this.vy = -this.vy * bounceDamping;
+                    this.y = this.y < 0 ? 0 : canvas.height;
+                }
+
+                // Update position
+                this.x += this.vx;
+                this.y += this.vy;
+            }
+
+            draw() {
+                // Particle color based on distance from mouse
+                let color = 'rgba(255, 255, 255, 0.8)';
+                if (mouse.active && mouse.x !== null && mouse.y !== null) {
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < config.mouseRadius) {
+                        // Brighter when close to mouse
+                        let intensity = 1 - (distance / config.mouseRadius);
+                        color = `rgba(255, 255, 255, ${0.8 + intensity * 0.2})`;
+                    }
+                }
+
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
             }
         }
 
         function init() {
+            setDimensions();
             particlesArray = [];
-            let numberOfParticles = (canvas.height * canvas.width) / 9000;
-            for (let i = 0; i < numberOfParticles; i++) {
-                let size = (Math.random() * 2) + 1;
-                let x = (Math.random() * ((window.innerWidth - size * 2) - (size * 2)) + size * 2);
-                let y = (Math.random() * ((window.innerHeight - size * 2) - (size * 2)) + size * 2);
-                let directionX = (Math.random() * 1) - 0.5;
-                let directionY = (Math.random() * 1) - 0.5;
-                let color = '#ffffff';
-
-                particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+            for (let i = 0; i < config.particleCount; i++) {
+                particlesArray.push(new Particle());
             }
         }
 
-        function connect() {
-            let opacityValue = 1;
-            for (let a = 0; a < particlesArray.length; a++) {
-                for (let b = a; b < particlesArray.length; b++) {
-                    let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) +
-                        ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+        function drawLines() {
+            // Draw connections between particles
+            for (let i = 0; i < particlesArray.length; i++) {
+                for (let j = i + 1; j < particlesArray.length; j++) {
+                    let dx = particlesArray[i].x - particlesArray[j].x;
+                    let dy = particlesArray[i].y - particlesArray[j].y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
 
-                    if (distance < (canvas.width / 7) * (canvas.height / 7)) {
-                        opacityValue = 1 - (distance / 20000);
-                        if (opacityValue > 0) {
-                            ctx.strokeStyle = 'rgba(255, 255, 255,' + opacityValue + ')';
-                            ctx.lineWidth = 1;
-                            ctx.beginPath();
-                            ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-                            ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
-                            ctx.stroke();
+                    if (distance < config.connectionDistance) {
+                        let opacity = 1 - (distance / config.connectionDistance);
+
+                        // Adjust line color based on mouse proximity
+                        let lineColor;
+                        if (mouse.active && mouse.x !== null) {
+                            let mouseDist1 = Math.sqrt(
+                                Math.pow(mouse.x - particlesArray[i].x, 2) +
+                                Math.pow(mouse.y - particlesArray[i].y, 2)
+                            );
+                            let mouseDist2 = Math.sqrt(
+                                Math.pow(mouse.x - particlesArray[j].x, 2) +
+                                Math.pow(mouse.y - particlesArray[j].y, 2)
+                            );
+
+                            if (mouseDist1 < config.mouseRadius || mouseDist2 < config.mouseRadius) {
+                                // Brighter lines near mouse
+                                lineColor = `rgba(255, 255, 255, ${opacity * 0.5})`;
+                            } else {
+                                lineColor = `rgba(255, 255, 255, ${opacity * 0.2})`;
+                            }
+                        } else {
+                            lineColor = `rgba(255, 255, 255, ${opacity * 0.2})`;
                         }
+
+                        ctx.strokeStyle = lineColor;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+                        ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
+                        ctx.stroke();
                     }
                 }
+
+                // Draw lines from particles to mouse (optional - can be removed for cleaner look)
+                if (mouse.active && mouse.x !== null) {
+                    let mDx = particlesArray[i].x - mouse.x;
+                    let mDy = particlesArray[i].y - mouse.y;
+                    let mDist = Math.sqrt(mDx * mDx + mDy * mDy);
+
+                    if (mDist < config.mouseRadius) {
+                        let mOpacity = 1 - (mDist / config.mouseRadius);
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${mOpacity * 0.3})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+                        ctx.lineTo(mouse.x, mouse.y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // Draw mouse effect circle (optional visual feedback)
+            if (mouse.active && mouse.x !== null && mouse.y !== null) {
+                ctx.beginPath();
+                ctx.arc(mouse.x, mouse.y, config.mouseRadius, 0, Math.PI * 2);
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+                ctx.lineWidth = 1;
+                ctx.stroke();
             }
         }
 
         function animate() {
-            animationFrameId = requestAnimationFrame(animate);
-            ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update();
-            }
-            connect();
+            particlesArray.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            drawLines();
+            animationFrameId = requestAnimationFrame(animate);
         }
 
         init();
         animate();
 
-        const handleResize = () => {
-            setDimensions();
-            init();
-        };
-
-        window.addEventListener('resize', handleResize);
-        window.addEventListener('mouseout', () => {
-            mouse.x = undefined;
-            mouse.y = undefined;
-        });
-
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('resize', handleResize);
+            window.removeEventListener('mouseout', handleMouseOut);
+            window.removeEventListener('resize', () => {
+                setDimensions();
+                init();
+            });
             cancelAnimationFrame(animationFrameId);
         };
     }, []);
@@ -156,13 +251,13 @@ const ParticleBackground = () => {
         <canvas
             ref={canvasRef}
             style={{
-                position: 'absolute',
+                position: 'fixed',
                 top: 0,
                 left: 0,
-                width: '100%',
-                height: '100%',
+                width: '100vw',
+                height: '100vh',
                 background: '#000000',
-                zIndex: 0
+                zIndex: -1
             }}
         />
     );

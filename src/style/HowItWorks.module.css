@@ -1,0 +1,450 @@
+.wrapper {
+    position: relative;
+    padding: 140px 0;
+    background: radial-gradient(circle, #0b0b0b, #000);
+    overflow: hidden;
+    min-height: 200vh;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 120px;
+}
+
+.header h2 {
+    font-size: 56px;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.header p {
+    color: #aaa;
+    font-size: 18px;
+    font-weight: 300;
+}
+
+/* SVG Path Container */
+.pathWrapper {
+    position: absolute;
+    left: 50%;
+    top: 240px;
+    transform: translateX(-50%);
+    height: calc(100% - 240px);
+    width: 202px;
+    z-index: 1;
+}
+
+.svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.grayPath {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.15);
+    stroke-dasharray: 10 8;
+    stroke-width: 2;
+}
+
+.greenPath {
+    fill: none;
+    stroke: #66ff33;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Rocket Styling */
+.rocket {
+    position: absolute;
+    width: 60px !important;
+    height: 60px !important;
+    pointer-events: none;
+    z-index: 10;
+    filter: drop-shadow(0 0 10px rgba(74, 222, 128, 0.5));
+    transform-origin: center center;
+}
+
+/* Rocket Trail Effect */
+.rocketTrail {
+    position: absolute;
+    width: 40px;
+    height: 20px;
+    background: radial-gradient(ellipse at center,
+            rgba(74, 222, 128, 0.8) 0%,
+            rgba(74, 222, 128, 0.4) 40%,
+            transparent 70%);
+    filter: blur(3px);
+    transform: translate(-50%, -50%) rotate(90deg);
+    opacity: 0.8;
+    z-index: 9;
+    pointer-events: none;
+}
+
+/* Cards Container */
+.cards {
+    position: relative;
+    max-width: 1200px;
+    margin: auto;
+    z-index: 2;
+    padding: 0 20px;
+}
+
+.cardWrap {
+    position: relative;
+    margin: 160px 0;
+    width: 100%;
+}
+
+.left {
+    padding-left: 0;
+    text-align: left;
+}
+
+.right {
+    padding-right: 0;
+    text-align: right;
+}
+
+.left .card {
+    margin-right: auto;
+    margin-left: 0;
+}
+
+.right .card {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.card {
+    width: 420px;
+    background: linear-gradient(145deg, #111, #0a0a0a);
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid #222;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.card:hover {
+    border-color: #66ff33;
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(74, 222, 128, 0.1);
+}
+
+.card h3 {
+    color: #fff;
+    font-size: 22px;
+    margin-bottom: 12px;
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+.card p {
+    color: #7cff7c;
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+    opacity: 0.9;
+}
+
+.bigNumber {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    font-size: 64px;
+    color: rgba(255, 255, 255, 0.05);
+    font-weight: bold;
+    font-family: monospace;
+}
+
+.circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #111, #0a0a0a);
+    color: #66ff33;
+    border: 2px solid #66ff33;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+    z-index: 3;
+    box-shadow: 0 0 20px rgba(74, 222, 128, 0.3);
+}
+
+/* Connecting Line from Circle to Card */
+.circle::before {
+    content: '';
+    position: absolute;
+    width: 80px;
+    height: 2px;
+    background: #66ff33;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.left .circle::before {
+    right: -80px;
+}
+
+.right .circle::before {
+    left: -80px;
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+    .card {
+        width: 380px;
+    }
+
+    .circle::before {
+        width: 60px;
+    }
+
+    .left .circle::before {
+        right: -60px;
+    }
+
+    .right .circle::before {
+        left: -60px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .header h2 {
+        font-size: 42px;
+    }
+
+    .pathWrapper {
+        left: 30px;
+        transform: none;
+        height: calc(100% - 200px);
+        top: 200px;
+    }
+
+    .svg {
+        width: 50px;
+    }
+
+    .card {
+        width: calc(100% - 100px);
+        margin-left: 80px !important;
+        margin-right: 0 !important;
+    }
+
+    /* .right .card {
+        margin-left: 80px !important;
+    } */
+
+    .circle {
+        left: -40px;
+        transform: translateY(-50%);
+    }
+
+    .circle::before {
+        display: none;
+    }
+
+    .cardWrap {
+        margin: 120px 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .wrapper {
+        padding: 80px 0;
+        min-height: auto;
+    }
+
+    .header {
+        margin-bottom: 80px;
+    }
+
+    .header h2 {
+        font-size: 36px;
+    }
+
+    .header p {
+        font-size: 16px;
+    }
+
+    .pathWrapper,
+    .rocket,
+    .rocketTrail {
+        display: none;
+    }
+
+    .cards {
+        padding: 0;
+    }
+
+    .cardWrap {
+        margin: 60px 0;
+    }
+
+    .card {
+        width: 90%;
+        margin: 0 auto !important;
+        padding: 30px;
+    }
+
+    .circle {
+        position: absolute;
+        top: -30px;
+        left: 50% !important;
+        transform: translateX(-50%);
+    }
+
+    .left,
+    .right {
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .header h2 {
+        font-size: 28px;
+    }
+
+    .card {
+        width: 95%;
+        padding: 25px;
+    }
+
+    .card h3 {
+        font-size: 20px;
+    }
+
+    .bigNumber {
+        font-size: 48px;
+    }
+}
+
+@media (max-width: 1199px) {
+
+    /* Path moves to left */
+    .pathWrapper {
+        left: 40px;
+        top: 200px;
+        transform: none;
+        width: 60px;
+    }
+
+    .svg {
+        width: 60px;
+    }
+
+    .rocket {
+        left: 40px;
+        transform: none;
+    }
+
+    /* Cards become single column */
+    .cardWrap {
+        margin: 100px 0;
+    }
+
+    .left,
+    .right {
+        text-align: left;
+    }
+
+    .card {
+        width: calc(100% - 140px);
+        /* margin-left: 120px !important; */
+        margin-right: 0 !important;
+    }
+
+    .circle {
+        left: 40px;
+        transform: translate(-50%, -50%);
+    }
+
+    .circle::before {
+        display: none;
+    }
+}
+
+@media (max-width: 767px) {
+
+    .wrapper {
+        padding: 60px 0;
+    }
+
+    .header {
+        margin-bottom: 60px;
+    }
+
+    /* Disable complex visuals */
+    .pathWrapper,
+    .rocket,
+    .rocketTrail {
+        display: none !important;
+    }
+
+    /* Cards = simple stack */
+    .cards {
+        padding: 0 16px;
+    }
+
+    .cardWrap {
+        margin: 48px 0;
+    }
+
+    .card {
+        /* width: 100%; */
+        margin: 0 auto !important;
+        padding: 24px;
+    }
+
+    .left,
+    .right {
+        text-align: center;
+    }
+
+  
+
+    .circle {
+        position: relative;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-bottom: 16px;
+    }
+
+    .circle::before {
+        display: none;
+    }
+
+    .bigNumber {
+        font-size: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .header h2 {
+        font-size: 26px;
+    }
+
+    .header p {
+        font-size: 15px;
+    }
+
+    .card h3 {
+        font-size: 18px;
+    }
+
+    .card p {
+        font-size: 15px;
+    }
+}

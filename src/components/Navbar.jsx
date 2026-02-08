@@ -11,6 +11,7 @@ const menuItems = [
   { name: "About", path: "/about" },
   { name: "Services", path: "/ServicesPage" },
   { name: "Career", path: "/CareerPage" },
+  { name: "Blog", path: "/Blog" },
   { name: "Contact", path: "/contact" },
   // { name: "Portfolio", path: "/PortfolioPage" },
 ];

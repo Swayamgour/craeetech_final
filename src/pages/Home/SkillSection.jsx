@@ -52,7 +52,7 @@ const SkillSection = () => {
                             <div className="center-wrapper">
                                 <div className="pulse-glow"></div>
                                 <img src="https://dev254.kodesolution.com/edigitaal/wp-content/uploads/2025/11/640px-Sketch_Logo-1.png" alt="Sketch" />
-                                <span className="highlight-label">Skatch</span>
+                                <span className="highlight-label">Sketch</span>
                             </div>
                         </div>
 

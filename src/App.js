@@ -10,6 +10,8 @@ import Navbar from "./components/Navbar";
 import Footer from "./pages/Footer";
 import ServicesPage from "./pages/ServicesPage";
 import CareerPage from "./pages/CareerPage";
+import BlogDetail from "./pages/BlogDetail";
+import Blog from "./pages/Blog";
 // import About from "./pages/About/About";
 // import Contact from "./pages/Contact/Contact";
 
@@ -31,6 +33,8 @@ function App() {
           <Route path="/PortfolioPage" element={<PortfolioPage />} />
           <Route path="/ServicesPage" element={<ServicesPage />} />
           <Route path="/CareerPage" element={<CareerPage />} />
+          <Route path="/BlogDetail" element={<BlogDetail />} />
+          <Route path="/Blog" element={<Blog />} />
           {/* <Route path="/Ca" element={<Ca />} /> */}
         </Routes>
         <Footer />

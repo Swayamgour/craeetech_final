@@ -16,7 +16,7 @@
 
 .hero h1 {
     font-size: 3.5rem;
-    color: #f7c873;
+    color: #66ff33;
 }
 
 .hero p {
@@ -48,7 +48,7 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
-    color: #f7c873;
+    color: #66ff33;
 }
 
 .icon {
@@ -74,7 +74,7 @@
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, #f7c87330, transparent);
+    background: linear-gradient(135deg, #66ff3330, transparent);
     opacity: 0;
     transition: 0.3s;
 }
